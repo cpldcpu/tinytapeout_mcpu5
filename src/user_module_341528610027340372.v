@@ -27,7 +27,7 @@ localparam OP_STA  = 3'b101;     //101RRR
 localparam OP_JMPA = 6'b111010;  //111010
 
 reg [8:0] accu; // accu(6) is carry !
-reg [7:0] pc;
+reg [5:0] pc;
 reg [7:0] regfile [0:8];
 reg iflag;
 integer i;
@@ -36,11 +36,6 @@ initial begin
 end
 //    handle regfile writes (STA)
     always @(*)
-        // if (rst) begin
-        //     for (i=0; i<=8; i=i+1)
-        //         regfile[i] <=0;
-        // end
-        // else 
         if ((inst_in[5:3] == OP_STA) && ~rst && ~clk)
             regfile[inst_in[2:0]] <= accu;
 
@@ -52,22 +47,13 @@ end
 		end
 		else begin
 
-            // PC path
-            // casex(inst_in)
-            //     6'b00????: pc <= accu[8] ? pc : pc + {{4{inst_in[3]}}, inst_in[3:0]};                             // BCC #imm4
-            //     6'b111010: pc <= accu;                                                                            // JMP A
-            //     default:   pc <= pc + 1'b1;
-            // endcase
-
             if ((inst_in[5:4] == OP_BCC) && ~accu[8])            // conditional branch (BCC)            
-                // pc <= pc + {{4{inst_in[3]}}, inst_in[3:0]};  
-                pc <= {pc[7:0], inst_in[3:0]};  
+                pc <= pc + {{2{inst_in[3]}}, inst_in[3:0]};  
             else if (inst_in == OP_JMPA)                        // JMPA
-                pc <= accu;
+                pc <= accu[5:0];
             else
                 pc <= pc + 1'b1;
                        
-
             // ALU path + carry flag
             casex(inst_in)
                 6'b00????: accu[8]   <= 1'b0;                                                                     // BCC #imm4
@@ -89,6 +75,6 @@ end
             endcase		
         end
 
-assign cpu_out = clk ? pc[7:0] :  accu[7:0] ; 
+assign cpu_out = clk ? {2'b00,pc[5:0]} :  accu[7:0] ; 
 
 endmodule
