@@ -14,7 +14,6 @@ MCPU5 MCPU5_top (
 );
 
 endmodule
-
 module MCPU5(inst_in,cpu_out,rst,clk);
 
 input [5:0] inst_in;
@@ -27,7 +26,7 @@ localparam OP_STA  = 3'b101;     //101RRR
 localparam OP_JMPA = 6'b111010;  //111010
 
 reg [8:0] accu; // accu(6) is carry !
-reg [5:0] pc;
+reg [7:0] pc;
 reg [7:0] regfile [0:8];
 reg iflag;
 integer i;
@@ -48,9 +47,9 @@ end
 		else begin
 
             if ((inst_in[5:4] == OP_BCC) && ~accu[8])            // conditional branch (BCC)            
-                pc <= pc + {{2{inst_in[3]}}, inst_in[3:0]};  
+                pc <= pc + {{4{inst_in[3]}}, inst_in[3:0]};  
             else if (inst_in == OP_JMPA)                        // JMPA
-                pc <= accu[5:0];
+                pc <= accu[7:0];
             else
                 pc <= pc + 1'b1;
                        
@@ -75,6 +74,6 @@ end
             endcase		
         end
 
-assign cpu_out = clk ? {2'b00,pc[5:0]} :  accu[7:0] ; 
+assign cpu_out = clk ? {pc[7:0]} :  accu[7:0] ; 
 
 endmodule
