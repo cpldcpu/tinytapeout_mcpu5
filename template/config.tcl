@@ -22,7 +22,7 @@ set ::env(FP_SIZING) absolute
 set ::env(DIE_AREA) "0 0 100 100"
 set ::env(FP_CORE_UTIL) 45
 set ::env(PL_BASIC_PLACEMENT) {1}
-set ::env(PL_TARGET_DENSITY) 0.75
+set ::env(PL_TARGET_DENSITY) 0.8
 
 # use alternative efabless decap cells to solve LI density issue
 set ::env(DECAP_CELL) "\
