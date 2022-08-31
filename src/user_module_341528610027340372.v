@@ -38,8 +38,8 @@ end
 //    handle regfile writes (STA)
     always @(*)
         if (rst) begin
-            for (i=0; i<=8; i=i+1)
-                regfile[i] <=0;
+ //           for (i=0; i<=8; i=i+1)
+ //               regfile[i] <=0;
         end
         else if ((inst_in[5:3] == OP_STA) && ~rst && ~clk)
             regfile[inst_in[2:0]] <= accu;
