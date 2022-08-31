@@ -23,59 +23,59 @@ output [7:0] cpu_out;
 input rst;
 input clk;
 
-localparam OP_JCC = 2'b00;      //00IIII
-localparam OP_STA = 3'b101;     //101RRR
-
+localparam OP_BCC  = 2'b00;      //00IIII
+localparam OP_STA  = 3'b101;     //101RRR
+localparam OP_JMPA = 6'b111010;  //111010
 
 reg [8:0] accu; // accu(6) is carry !
 reg [7:0] pc;
 reg [7:0] regfile [0:8];
+reg iflag;
 integer i;
 
 initial begin
 end
-
 //    handle regfile writes (STA)
     always @(*)
-        if (rst) begin
- //           for (i=0; i<=8; i=i+1)
- //               regfile[i] <=0;
-        end
-        else if ((inst_in[5:3] == OP_STA) && ~rst && ~clk)
+        if ((inst_in[5:3] == OP_STA) && ~rst && ~clk)
             regfile[inst_in[2:0]] <= accu;
-       
+
 	always @(posedge clk)
 		if (rst) begin
 			accu <= 0;	
 			pc <= 0;
-            // for (i=0; i<=8; i=i+1)
-            //     regfile[i] <=0;
+            iflag <= 0;
 		end
 		else begin
-            // Register file, handle STA
-            // if (inst_in[5:3] == OP_STA)
-            //     regfile[inst_in[2:0]] <= accu[7:0];
 
-            // PC path
-            if ((inst_in[5:4] == OP_JCC) && ~accu[8])
-                pc <= { pc[7:4], inst_in[3:0]};   // TODO: Handle segmented jump
+            if ((inst_in[5:4] == OP_BCC) && ~accu[8])          // conditional branch (BCC)            
+                pc <= pc + {{4{inst_in[3]}}, inst_in[3:0]};  
+            else if (inst_in == OP_JMPA)                        // JMPA
+                pc <= accu;
             else
                 pc <= pc + 1'b1;
+                       
 
-            // ALU path
+            // ALU path + carry flag
             casex(inst_in)
-                6'b00????: accu[8]   <= 1'b0;                                              // JCC #imm4
-                6'b01????: accu[7:0] <= {{4{inst_in[3]}}, inst_in[3:0]}  ;                 // LDI #simm4
-                6'b100???: accu[8:0] <= {1'b0,regfile[inst_in[2:0]]} + {1'b0,accu[7:0]};   // ADD reg8
-                6'b101???: ;                                                               // STA reg8
-                6'b110???: ;                                                               // free reg 8
-                6'b111000: accu[7:0] <= ~accu[7:0];                                        // NOT
-                6'b111001: ;                                                               // OUT
-                6'b111010: ;                                                               // Free 
-                6'b111011: ;                                                               // Free
-                6'b1111??: ;                                                               // Free imm2
+                6'b00????: accu[8]   <= 1'b0;                                                                     // BCC #imm4
+                6'b01????: accu[7:0] <= iflag ? { inst_in[3:0], accu[3:0]}: {{4{inst_in[3]}}, inst_in[3:0]}  ;    // LDI #simm4
+                6'b100???: accu[8:0] <= {1'b0,regfile[inst_in[2:0]]} + {1'b0,accu[7:0]};                          // ADD reg8
+                6'b101???: ;                                                                                      // STA reg8
+                6'b110???: accu[7:0] <= regfile[inst_in[2:0]];                                                    // LDA reg8
+                6'b111000: accu[7:0] <= ~accu[7:0];                                                               // NOT
+                6'b111001: ;                                                                                      // OUT
+                6'b111010: ;                                                                                      // JMP A
+                6'b111011: ;                                                                                      // Free
+                6'b1111??: ;                                                                                      // Free imm2
             endcase
-		end
+
+            // Flags
+            casex(inst_in)
+                6'b01????: iflag <= 1'b1;           // LDI #simm4
+                default:   iflag <= 1'b0;           // all others
+            endcase		
+        end
 
 assign cpu_out = clk ? pc[7:0] :  accu[7:0] ; 
 
