@@ -34,18 +34,27 @@ integer i;
 
 initial begin
 end
+
+//    handle regfile writes (STA)
+    always @(*)
+        if (rst) begin
+            for (i=0; i<=8; i=i+1)
+                regfile[i] <=0;
+        end
+        else if ((inst_in[5:3] == OP_STA) && ~rst && ~clk)
+            regfile[inst_in[2:0]] <= accu;
        
 	always @(posedge clk)
 		if (rst) begin
 			accu <= 0;	
 			pc <= 0;
-            for (i=0; i<=8; i=i+1)
-                regfile[i] <=0;
+            // for (i=0; i<=8; i=i+1)
+            //     regfile[i] <=0;
 		end
 		else begin
             // Register file, handle STA
-            if (inst_in[5:3] == OP_STA)
-                regfile[inst_in[2:0]] <= accu[7:0];
+            // if (inst_in[5:3] == OP_STA)
+            //     regfile[inst_in[2:0]] <= accu[7:0];
 
             // PC path
             if ((inst_in[5:4] == OP_JCC) && ~accu[8])
