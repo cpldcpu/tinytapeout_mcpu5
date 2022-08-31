@@ -15,7 +15,6 @@ MCPU5 MCPU5_top (
 
 endmodule
 
-
 module MCPU5(inst_in,cpu_out,rst,clk);
 
 input [5:0] inst_in;
@@ -37,6 +36,11 @@ initial begin
 end
 //    handle regfile writes (STA)
     always @(*)
+        // if (rst) begin
+        //     for (i=0; i<=8; i=i+1)
+        //         regfile[i] <=0;
+        // end
+        // else 
         if ((inst_in[5:3] == OP_STA) && ~rst && ~clk)
             regfile[inst_in[2:0]] <= accu;
 
@@ -48,8 +52,16 @@ end
 		end
 		else begin
 
-            if ((inst_in[5:4] == OP_BCC) && ~accu[8])          // conditional branch (BCC)            
-                pc <= pc + {{4{inst_in[3]}}, inst_in[3:0]};  
+            // PC path
+            // casex(inst_in)
+            //     6'b00????: pc <= accu[8] ? pc : pc + {{4{inst_in[3]}}, inst_in[3:0]};                             // BCC #imm4
+            //     6'b111010: pc <= accu;                                                                            // JMP A
+            //     default:   pc <= pc + 1'b1;
+            // endcase
+
+            if ((inst_in[5:4] == OP_BCC) && ~accu[8])            // conditional branch (BCC)            
+                // pc <= pc + {{4{inst_in[3]}}, inst_in[3:0]};  
+                pc <= {pc[7:0], inst_in[3:0]};  
             else if (inst_in == OP_JMPA)                        // JMPA
                 pc <= accu;
             else
