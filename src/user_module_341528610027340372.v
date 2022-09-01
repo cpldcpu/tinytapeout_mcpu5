@@ -62,10 +62,9 @@ end
                 6'b100???: accu[8:0] <= {1'b0,regfile[inst_in[2:0]]} + {1'b0,accu[7:0]};                          // ADD reg8
                 6'b101???: ;                                                                                      // STA reg8
                 6'b110???: accu[7:0] <= regfile[inst_in[2:0]];                                                    // LDA reg8
-                6'b111000: accu[7:0] <= ~accu[7:0];                                                               // NOT
-                6'b111001: ;                                                                                      // OUT
+                6'b11100?: accu[7:0] <= ~accu[7:0] + inst_in[0];                                                  // NEG / NOT
                 6'b111010: ;                                                                                      // JMP A
-                6'b111011: ;                                                                                      // Free
+                6'b111011: ;                                                                                      // OUT
                 6'b1111??: ;                                                                                      // Free imm2
             endcase
 
