@@ -1,5 +1,8 @@
 `timescale 1ns / 1ps
 
+// MCPU5 testbench
+// File ending changed to *.vtb to hide from github action
+
 module MCPU5_tb;
 
 wire [7:0] cpu_out;
