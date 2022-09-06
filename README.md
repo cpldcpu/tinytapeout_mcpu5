@@ -6,13 +6,13 @@ An 8 bit RISC CPU for [TinyTapeout](www.tinytapeout.com). Tinytapeout combines 5
 - Only eight digital inputs and eight digital outputs are allowed.
 - I/O will be provided via the scanchain (a long shift register) and is hence rather slow.
 
-Designing a CPU around these constraints offers a nice challenge. Challange taken!
+Designing a CPU around these constraints offers a nice challenge. Challenge taken!
 
 # Design Description
 
 ## Top level
 
-The strict limitations on I/O does not allow implementing a normal I/O interface with bidirectional data bus and address output. One way of addressing this would be to reduce the data width of the CPU to 4 bit, but this was deemed to limiting. Another option, implementing a serial interface, appeared too slow and too complex.
+The strict limitations on I/O do not allow implementing a normal interface with bidirectional data bus and separate address bus. One way of addressing this would be to reduce the data width of the CPU to 4 bit, but this was deemed to limiting. Another option, implementing a serial interface, appeared too slow and too complex.
 
 Instead the I/Os were allocated as shown below.
 
@@ -20,17 +20,17 @@ Instead the I/Os were allocated as shown below.
   <img width=400 src='https://user-images.githubusercontent.com/4086406/188716014-33053217-c1a6-4cac-afc2-257b7203d407.png'>
 </p>
 
-The CPU is based on the Harvard Architecture separates data and program memories. The data memory is completely internal to the CPU. The program memory is external and is accessed through the I/O. All data has to be loaded as constants through the opcode.
+The CPU is based on the Harvard Architecture with separate data and program memories. The data memory is completely internal to the CPU. The program memory is external and is accessed through the I/O. All data has to be loaded as constants through machine code instructions.
 
-Two of the input pins are used for clock and reset, the remaining ones are reserved for instrcutions and are six bit in length. The output is multiplexed between the program counter (when clk is '1') and the content of the main register, the Accumulator. Accessing the Accu allows reading the program output.
+Two of the input pins are used for clock and reset, the remaining ones are reserved for instructions and are six bit in length. The output is multiplexed between the program counter (when clk is '1') and the content of the main register, the Accumulator. Accessing the Accumulator allows reading the program output.
 
-## Programmer Model
+## Programmers Model
 
 <p align="center">
   <img src='https://user-images.githubusercontent.com/4086406/188716065-a4d7755b-9020-4291-94e4-f22cf04bb168.png'>
 </p>
 
-Besides simplifing the external interface, the Harvard Architecture implemention also removes the requirement to interleave code and data access on the bus. Every instruction can be executed in a single clock cycle. Due to this, no state machine for microsequencing is required and instrcutions can be decoded directly from the inst[5:0] input.
+Besides simplifying the external interface, the Harvard Architecture implementation also removes the requirement to interleave code and data access on the bus. Every instruction can be executed in a single clock cycle. Due to this, no state machine for micro-sequencing is required and instructions can be decoded directly from the inst[5:0] input.
 
 All data operations are performed on the accumulator. In addition, there are eight data registers. The data registers are implemented as a single port memory based on latches, which significantly reduced are usage compared to a two port implementation. The Accu is complemented by a single carry flag, which can be used for conditional branches.
 
@@ -38,11 +38,11 @@ Handling of constants is supported by the integer flag („I-Flag“), which ena
 
 ## Instruction Set Architecture
 
-The list of instructions and their encoding is shown below. One challenge in the instruction set design was to encode the target address for branches. The limited opcode size only allows for a four bit immediate to be encoded as a maximum. Initially, I considered introducing an additional segment register for long jumps, but ultimatelly decided to introduce relative addressing for conditional branches and a long jmp instruction that is fed from the accumulator. 
+The list of instructions and their encoding is shown below. One challenge in the instruction set design was to encode the target address for branches. The limited opcode size only allows for a four bit immediate to be encoded as a maximum. Initially, I considered introducing an additional segment register for long jumps, but ultimately decided to introduce relative addressing for conditional branches and a long jmp instruction that is fed from the accumulator. 
 
-Having both NOT and NEG may seems excessive, but the implementation was cheap on ressources and some instruction sequences could be simplified.
+Having both NOT and NEG may seems excessive, but the implementation was cheap on resources and some instruction sequences could be simplified.
 
-No logical instructions are supported since they were not needed in any of my typical test programs.
+No boolean logic instructions (AND/OR/NOT/NOR/XOR) are supported since they were not needed in any of my typical test programs.
 
 ![grafik](https://user-images.githubusercontent.com/4086406/188716202-d0681200-9578-414f-8c06-417b6ae8950d.png)
 
