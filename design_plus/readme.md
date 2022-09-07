@@ -12,3 +12,12 @@ Three changes have been introduced:
 
 The resulting instruction set designs reduces code size, improves execution speed and even reduces the number of macroscells in the design. A clear win-win.
 
+## Updated Instruction set
+Changes highlighted in red
+![grafik](https://user-images.githubusercontent.com/4086406/188964781-6225424b-dbec-4612-abec-af46d9475376.png)
+## Macros using updated instruction set
+![grafik](https://user-images.githubusercontent.com/4086406/188964855-a3e7898a-a654-4cfc-b8fc-e3d9afdaa0ac.png)
+## Benchmark of normal vs. plus version
+![grafik](https://user-images.githubusercontent.com/4086406/188964934-6237c9f9-7317-45d7-9a42-db6cfef9d972.png)
+
+
