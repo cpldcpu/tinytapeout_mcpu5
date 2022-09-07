@@ -12,6 +12,7 @@ Run primes code
 
 The output of the executed programs is directly displayed in the shell. In addition, a VCD file with waveforms is generated, which can be viewed with GTKWAVE or the [WaveTrace plugin](https://www.wavetrace.io/) in VSCode.
 
+![grafik](https://user-images.githubusercontent.com/4086406/188920501-4257ff7e-d6df-495d-963a-cf1aee4d25f1.png)
 
 The number in brackets shows the number of executed program cycles, the output shows the content of the accumulator when the "OUT" instruction in the machine code is executed.
 
