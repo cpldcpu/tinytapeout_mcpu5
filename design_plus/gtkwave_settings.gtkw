@@ -1,0 +1,30 @@
+[*]
+[*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
+[*] Thu Sep 01 11:42:39 2022
+[*]
+[dumpfile] "D:\VHDL\MCPU5\tinytapeout_mcpu5\src\MCPU5_tb.vcd"
+[dumpfile_mtime] "Thu Sep 01 11:41:58 2022"
+[dumpfile_size] 6959
+[savefile] "D:\VHDL\MCPU5\tinytapeout_mcpu5\src\gtkwave_settings.gtkw"
+[timestart] 0
+[size] 2048 1089
+[pos] -1 -1
+*-14.699081 161800 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] MCPU5_tb.
+[treeopen] MCPU5_tb.MCPU5_top.
+[sst_width] 197
+[signals_width] 126
+[sst_expanded] 1
+[sst_vpaned_height] 325
+@28
+MCPU5_tb.MCPU5_top.MCPU5_top.clk
+MCPU5_tb.MCPU5_top.MCPU5_top.rst
+MCPU5_tb.MCPU5_top.MCPU5_top.iflag
+@29
+MCPU5_tb.MCPU5_top.MCPU5_top.inst_in[5:0]
+@22
+MCPU5_tb.MCPU5_top.MCPU5_top.accu[8:0]
+MCPU5_tb.MCPU5_top.MCPU5_top.pc[7:0]
+MCPU5_tb.MCPU5_top.MCPU5_top.cpu_out[7:0]
+[pattern_trace] 1
+[pattern_trace] 0

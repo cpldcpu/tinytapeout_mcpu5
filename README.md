@@ -11,6 +11,7 @@ Designing a CPU around these constraints offers a nice challenge. Challenge take
 
   - [src/](src/) contains the original submission to TinyTapeout
   - [design/](design) Cleaned up source, Testbench, Assembler and code examples
+  - [design_plus/](design_plus) An improved version of the CPU with better instruction set architecture that this not make it into the tape out.
   - See below for a design description
 
 # Design Description
