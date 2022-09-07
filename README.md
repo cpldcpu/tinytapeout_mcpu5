@@ -7,6 +7,11 @@ An 8 bit RISC CPU for [TinyTapeout](www.tinytapeout.com). Tinytapeout combines 5
 - I/O will be provided via the scanchain (a long shift register) and is hence rather slow.
 
 Designing a CPU around these constraints offers a nice challenge. Challenge taken!
+# Content of repository
+
+  - [src/](src/) contains the original submission to TinyTapeout
+  - [design/](design) Cleaned up source, Testbench, Assembler and code examples
+  - See below for a design description
 
 # Design Description
 
@@ -52,12 +57,20 @@ The table below shows common instruction sequences that can be realized with mac
 
 ## Design after placement and routing
 
-The total cell count after synthesis is 489. Adding any additional features did not allow to complete the routing pass.
+The total cell count after synthesis is 489. Adding any additional features did not allow to complete the routing pass.The summary and floorplan below shows the synthesis result for 115x115µm² area, however the design fits perfectly into 100x100µm² as well.
 
 ![grafik](https://user-images.githubusercontent.com/4086406/188730917-91d6c818-d903-449f-bae3-42abefd206a6.png)
 
 ![grafik](https://user-images.githubusercontent.com/4086406/188715948-98719648-8b37-4218-b3ca-6674cf783abc.png)
 
+## Summary
+
+Zinnia (MCPU5) is a successful 8 bit processor implementation considering the TinyTapeout contraints. Both fibanacci and prime search algorithms were successfully ported and run in the testbench.
+
+In hindsight, two design decisions in the instruction set architecture seem limiting:
+
+- NEG not setting any flag. This is a missed opportunity to simplify test for zero.
+- Relative branch range of sIMM4 is too short to be useful. Instead a more efficient implementation for long jmps is required, for example based on sideloading register.
 
 ## Original TinyTapeout Readme
 -----

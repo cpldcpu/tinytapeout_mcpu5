@@ -1,3 +1,4 @@
 src/config.tcl
-src/*.vvp
-src/*.vcd
+*.vvp
+*.vcd
+*.o
