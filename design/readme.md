@@ -30,4 +30,4 @@ Assemble fibonacci code:
 Assemble primes code:
 >./assemble.sh primes
 
-A WIN32 executable compiled with MINGW32 is provided with SMAL32 along with the source. Warning: Unfortunately is appears that SMAL32.C is not compiled correctly under 64 bit GCC in Linux, although no error is shown. 
+A WIN32 executable compiled with MINGW32 is provided with SMAL32 along with the source. Warning: Unfortunately is appears that SMAL32.C is not compiled correctly under 64 bit GCC in Linux, although no error is shown at compile time.
