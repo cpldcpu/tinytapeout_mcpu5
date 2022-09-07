@@ -8,26 +8,6 @@
 
 USE "MCPU5.inc"
 
-;	sub=-2;	
-;	while ((number+sub)>0)
-;	{
-;		test=number;
-;		while (test>0) test+=sub;
-;		if (test==0) return 0;
-;		sub+=-1;
-;	}
-;	return 1;
-
-;	divisor=2;	
-;	while (divisor<number)
-;	{
-;		test=number;
-;		while (test>0) test-=divisor;
-;		if (test==0) return 0;
-;		divisor+=-1;
-;	}
-;	return 1;
-
 ;	divisor=2;	
 ;	while (divisor<number)
 ;	{

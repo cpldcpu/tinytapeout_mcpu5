@@ -20,9 +20,9 @@ USE "MCPU5.inc"
 
 .=0
 init:
-    LDI  (0)
+    LDI  0
     STA  R0  ; a = 0
-    LDI  (1)
+    LDI  1
     STA  R1  ; b = 1
 loop:
     LDA  R1
