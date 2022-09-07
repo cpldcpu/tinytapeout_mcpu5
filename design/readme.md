@@ -16,6 +16,8 @@ The output of the executed programs is directly displayed in the shell. In addit
 
 The number in brackets shows the number of executed program cycles, the output shows the content of the accumulator when the "OUT" instruction in the machine code is executed.
 
+![grafik](https://user-images.githubusercontent.com/4086406/188921127-461e2d08-ba10-4bcb-b11b-6f22f69dc238.png)
+
 # Assembler
 
 The subfolder [assembler/](assembler/) holds the SMAL32.c assembler, include files for MCPU5 and two assembler code examples (primes.asm and fibonacci.asm).
