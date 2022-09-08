@@ -6,7 +6,7 @@ An 8 bit RISC CPU for [TinyTapeout](www.tinytapeout.com). Tinytapeout combines 5
 - Only eight digital inputs and eight digital outputs are allowed.
 - I/O will be provided via the scanchain (a long shift register) and is hence rather slow.
 
-Designing a CPU around these constraints offers a nice challenge. Challenge taken!
+Designing a CPU around these constraints offers a nice challenge. Challenge accepted!
 # Content of repository
 
   - [src/](src/) contains the original submission to TinyTapeout
