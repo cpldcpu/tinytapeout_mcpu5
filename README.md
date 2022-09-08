@@ -66,12 +66,14 @@ The total cell count after synthesis is 489. Adding any additional features did 
 
 ## Summary
 
-Zinnia (MCPU5) is a successful 8 bit processor implementation considering the TinyTapeout contraints. Both fibanacci and prime search algorithms were successfully ported and run in the testbench.
+Zinnia (MCPU5) is a successful 8 bit processor implementation considering the TinyTapeout contraints. Both Fibonacci and prime search algorithms were successfully ported and run in the testbench.
 
 In hindsight, two design decisions in the instruction set architecture seem limiting:
 
 - NEG not setting any flag. This is a missed opportunity to simplify test for zero.
 - Relative branch range of sIMM4 is too short to be useful. Instead a more efficient implementation for long jmps is required, for example based on sideloading register.
+
+Both of these issues are addressed in an updated implementation.
 
 ## Original TinyTapeout Readme
 -----
